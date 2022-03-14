@@ -1,0 +1,73 @@
+<!--
+@description       : 
+@author            : ChangeMeIn@UserSettingsUnder.SFDoc
+@group             : 
+@last modified on  : 03-14-2022
+@last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
+-->
+<template>
+    <div style="width: 60%; margin:30px auto auto auto">
+        <template if:true={isloading}>
+            <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+        </template>
+        
+        <lightning-card  title="Please select a account and click next to view more detail" icon-name="standard:account">
+            <div style="width: 80%; margin:auto">
+                <div if:false={isDetailView}>
+                    <template if:true={accounts}>
+                        <template for:each={accounts} for:item="account">
+                            <div key={account.Id} class="slds-m-left_small" style="margin-top:10px">
+                                <template if:true={account.isSelected}>
+                                    <lightning-button class="selected" label={account.Name} onclick={handleButtonClick}></lightning-button>
+                                </template>
+                                <template if:false={account.isSelected}>
+                                    <lightning-button value={account.Id} label={account.Name} onclick={handleButtonClick}></lightning-button>
+                                </template>
+                            </div>
+                        </template>
+                    </template>
+                </div>
+
+                <div if:true={isDetailView}>
+                    <!-- detail page -->
+                    <!-- Id, Name, Industry, Type, owner.name, Owner.MediumPhotoUrl  -->
+                    <div class="custom-box slds-box slds-p-around_medium slds-text-align_center">
+                        <img src={mediumPhotoUrl} alt="profile picture"/>
+                    </div>
+                    <lightning-layout multiple-rows>
+                        <lightning-layout-item size="6" padding="around-small">
+                            <div class="custom-box slds-box slds-p-around_medium slds-text-align_center">
+                                <strong>Owner:</strong> {ownerName}
+                            </div>
+                        </lightning-layout-item>
+                        <lightning-layout-item size="6" padding="around-small">
+                            <div class="custom-box slds-box slds-p-around_medium slds-text-align_center">
+                                <strong>Account Name:</strong> {account.Name}
+                            </div>
+                        </lightning-layout-item>
+                        <lightning-layout-item size="6" padding="around-small">
+                            <div class="custom-box slds-box slds-p-around_medium slds-text-align_center">
+                                <strong>Industry:</strong> {account.Industry}
+                            </div>
+                        </lightning-layout-item>
+                        <lightning-layout-item size="6" padding="around-small">
+                            <div class="custom-box slds-box slds-p-around_medium slds-text-align_center">
+                                <strong>Type:</strong> {account.Type}
+                            </div>
+                        </lightning-layout-item>
+                    </lightning-layout>
+                </div>
+            </div>
+
+            <p slot="footer">
+                <template if:false={isDetailView}>
+                    <lightning-button variant="brand" label="Next" title="click next to see more detail" onclick={handleNextClick} class="slds-m-left_small"></lightning-button>
+                </template>
+                <template if:true={isDetailView}>
+                    <lightning-button variant="brand" label="Back" title="click back to see account list" onclick={handleBackClick} class="slds-m-left_small"></lightning-button>
+                </template>
+                
+            </p>
+        </lightning-card>
+    </div>
+</template>

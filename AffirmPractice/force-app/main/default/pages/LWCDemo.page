@@ -1,0 +1,20 @@
+<!--
+  @description       : display lightning web component in the visualforce page via  $Lightning.use
+  @author            : Steven Chen
+  @last modified on  : 03-14-2022
+-->
+<apex:page showHeader="false" sidebar="false">
+    <apex:includeLightning />    
+    <div id="LightningCmpid" />    
+    <script>
+    $Lightning.use("c:LWCDemoApp", function() {
+        $Lightning.createComponent("c:accountUI",
+          { 
+          },
+          "LightningCmpid",
+          function(cmp) {
+             console.log('LWC Componenet added in VF page');
+          });
+    });
+    </script>
+</apex:page>
